@@ -12,6 +12,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 60,
   },
   {
     id: "super-ped",
@@ -24,6 +25,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 60,
   },
   {
     id: "super-plus-ped",
@@ -36,6 +38,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 60,
   },
   {
     id: "gunluk-ped",
@@ -48,6 +51,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 100,
   },
   {
     id: "super-gunluk-ped",
@@ -60,6 +64,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 100,
   },
   {
     id: "tanga-gunluk-ped",
@@ -72,6 +77,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 100,
   },
   {
     id: "mini-tampon",
@@ -84,6 +90,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 60,
   },
   {
     id: "standart-tampon",
@@ -96,6 +103,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 60,
   },
   {
     id: "super-tampon",
@@ -108,6 +116,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 10,
     minQuantity: 0,
+    maxQuantity: 60,
   },
   {
     id: "heat-band-2",
@@ -120,6 +129,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 1,
     minQuantity: 0,
+    maxQuantity: 4,
   },
   {
     id: "heat-band-4",
@@ -132,6 +142,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 1,
     minQuantity: 0,
+    maxQuantity: 8,
   },
   {
     id: "cycle-essentials",
@@ -144,6 +155,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 1,
     minQuantity: 0,
+    maxQuantity: 2,
   },
   {
     id: "cranberry-essentials",
@@ -156,6 +168,7 @@ export const products: Product[] = [
     oneTimePrice: 123.61,
     quantityStep: 1,
     minQuantity: 0,
+    maxQuantity: 2,
   },
 ];
 

@@ -14,6 +14,7 @@ export interface Product {
   oneTimePrice: number;
   quantityStep: number;
   minQuantity: number;
+  maxQuantity: number;
 }
 
 export interface SubCategoryInfo {

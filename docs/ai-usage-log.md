@@ -280,6 +280,38 @@ Connect Redux store to UI components to enable functional cart management based 
 
 ---
 
+### Product Quantity Limits
+
+**What I asked AI to do:**
+
+Implement maximum quantity limits for each product category to prevent users from exceeding business rules I defined based on beije.co's constraints:
+
+**Quantity Limit Requirements I Defined:**
+
+1. **Add `maxQuantity` field to Product type:**
+   - Extended Product interface in `types/product.ts` with `maxQuantity: number`
+   - This allows each product to have its own maximum quantity limit
+
+2. **Set product-specific limits in data:**
+   - **beije Ped** (Standart, Süper, Süper+): **60 max**
+   - **beije Günlük Ped** (Günlük, Süper Günlük, Tanga): **100 max**
+   - **beije Tampon** (Mini, Standart, Süper): **60 max**
+   - **2'li Paket Isı Bandı**: **4 max**
+   - **4'lü Paket Isı Bandı**: **8 max**
+   - **beije Cycle Essentials**: **2 max**
+   - **beije Cranberry Essentials**: **2 max**
+
+3. **UI Implementation:**
+   - Disable + button when `quantity >= product.maxQuantity`
+   - Prevents users from adding more items than allowed
+   - Provides clear visual feedback (disabled button state)
+
+**Why:** Business rules require quantity limits per product category to manage inventory and subscription logistics.
+
+**Result:** Fully enforced quantity limits with disabled + buttons at maximum capacity, ensuring users cannot exceed allowed quantities for each product.
+
+---
+
 ### Next Steps
 - Setup NestJS backend
 - Implement email verification API

@@ -171,6 +171,7 @@ export function ProductAccordionList({
                           size="small" 
                           sx={{ color: "text.secondary" }}
                           onClick={() => handleAddProduct(product.id)}
+                          disabled={quantity >= product.maxQuantity}
                         >
                           <AddIcon fontSize="small" />
                         </IconButton>
