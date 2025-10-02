@@ -100,6 +100,48 @@ Create a `README.md` file with the following structure:
 
 ---
 
+### Product Types and Data Model
+
+**What I asked AI to do:**
+
+Create TypeScript type definitions based on the beije.co/custom-packet page structure I analyzed:
+
+**Page Structure I Defined:**
+- 2 main tabs: "Menstrüel Ürünler" and "Destekleyici Ürünler"
+
+**Menstrüel Ürünler Tab:**
+- beije Ped: Standart Ped, Süper Ped, Süper+ Ped
+- beije Günlük Ped: Günlük Ped, Süper Günlük Ped, Tanga Günlük Ped
+- beije Tampon: Mini Tampon, Standart Tampon, Süper Tampon
+
+**Destekleyici Ürünler Tab:**
+- Isı Bandı: 2'li Paket Isı Bandı, 4'lü Paket Isı Bandı
+- beije Cycle Essentials: beije Cycle Essentials
+- beije Cranberry Essentials: beije Cranberry Essentials
+
+**Additional Rules:**
+- Each category and product has its own icon/SVG
+- Menstrual products increment by 10 units
+- Support products increment by 1 unit
+- Categories have descriptions
+- Two purchase types: Subscription (auto-renews every 2 months) and One-time (single purchase)
+- Cart groups products by sub-category, with purchase type selection per sub-category
+
+**Types Created:**
+- `ProductCategory` enum for tab filtering (menstrual/support)
+- `Product` interface with category hierarchy, icons, dual pricing (subscription/one-time), and quantity rules
+- `PurchaseType` type for subscription vs one-time selection
+- `SubCategoryInfo` for category descriptions and icons
+- `CartProduct` for individual product quantities
+- `CartItem` for sub-category-based cart grouping with nested products
+- `PackageState` for Redux store structure
+
+**Why:** Needed a clear type system reflecting beije's cart behavior where products are grouped by sub-category with independent purchase type selection.
+
+**Result:** Type-safe foundation matching beije's cart structure with sub-category grouping and flexible purchase options.
+
+---
+
 ### Next Steps
 - Setup NestJS backend
 - Implement custom package selection page
