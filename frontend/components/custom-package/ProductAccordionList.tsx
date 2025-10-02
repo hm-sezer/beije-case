@@ -1,0 +1,132 @@
+"use client";
+
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Box,
+  Typography,
+  IconButton,
+  Avatar,
+  Alert,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { SubCategoryInfo } from "@/types/product";
+import { products } from "@/data/products";
+
+interface ProductAccordionListProps {
+  subCategories: SubCategoryInfo[];
+}
+
+export function ProductAccordionList({
+  subCategories,
+}: ProductAccordionListProps) {
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      {subCategories.map((subCat) => (
+        <Accordion
+          key={subCat.name}
+          sx={{
+            borderColor: "divider",
+            borderRadius: "8px !important",
+            "&:before": { display: "none" },
+            boxShadow: "none",
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{
+              "& .MuiAccordionSummary-content": {
+                my: 1.5,
+              },
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Avatar
+                sx={{
+                  width: 32,
+                  height: 32,
+                  bgcolor: "grey.200",
+                  fontSize: "0.875rem",
+                }}
+              >
+                📦
+              </Avatar>
+              <Typography variant="subtitle1" fontWeight={600}>
+                {subCat.name}
+              </Typography>
+            </Box>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Alert
+              icon="💚"
+              severity="success"
+              sx={{ mb: 2, bgcolor: "rgb(236, 241, 207)" }}
+            >
+              {subCat.description}
+            </Alert>
+
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+              {products
+                .filter((p) => p.subCategory === subCat.name)
+                .map((product) => (
+                  <Box
+                    key={product.id}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      py: 1,
+                    }}
+                  >
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                      <Box
+                        sx={{
+                          width: 24,
+                          height: 24,
+                          bgcolor: "error.main",
+                          borderRadius: 0.5,
+                        }}
+                      />
+                      <Typography>{product.name}</Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        border: "1px solid",
+                        borderColor: "divider",
+                        borderRadius: "24px",
+                        px: 2,
+                        py: 0.5,
+                      }}
+                    >
+                      <IconButton size="small" sx={{ color: "text.secondary" }}>
+                        <RemoveIcon fontSize="small" />
+                      </IconButton>
+                      <Typography
+                        sx={{
+                          minWidth: 32,
+                          textAlign: "center",
+                          fontWeight: 500,
+                        }}
+                      >
+                        0
+                      </Typography>
+                      <IconButton size="small" sx={{ color: "text.secondary" }}>
+                        <AddIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                ))}
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+      ))}
+    </Box>
+  );
+}
+
