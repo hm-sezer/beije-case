@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   Accordion,
   AccordionSummary,
@@ -15,6 +16,8 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { SubCategoryInfo } from "@/types/product";
 import { products } from "@/data/products";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addProduct, removeProduct } from "@/store/slices/packageSlice";
 
 interface ProductAccordionListProps {
   subCategories: SubCategoryInfo[];
@@ -23,11 +26,51 @@ interface ProductAccordionListProps {
 export function ProductAccordionList({
   subCategories,
 }: ProductAccordionListProps) {
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.package.items);
+  const [expandedAccordions, setExpandedAccordions] = React.useState<Set<string>>(
+    new Set([subCategories[0]?.name]) // İlk accordion default açık
+  );
+
+  // Accordion açma/kapama
+  const handleAccordionChange = (subCategoryName: string) => {
+    setExpandedAccordions((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(subCategoryName)) {
+        newSet.delete(subCategoryName);
+      } else {
+        newSet.add(subCategoryName);
+      }
+      return newSet;
+    });
+  };
+
+  // Her product için quantity'yi bul
+  const getProductQuantity = (productId: string, subCategory: string): number => {
+    const cartItem = cartItems.find((item) => item.subCategory === subCategory);
+    if (!cartItem) return 0;
+    
+    const product = cartItem.products.find((p) => p.productId === productId);
+    return product?.quantity || 0;
+  };
+
+  // + butonuna basıldığında
+  const handleAddProduct = (productId: string) => {
+    dispatch(addProduct({ productId }));
+  };
+
+  // - butonuna basıldığında
+  const handleRemoveProduct = (productId: string) => {
+    dispatch(removeProduct(productId));
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       {subCategories.map((subCat) => (
         <Accordion
           key={subCat.name}
+          expanded={expandedAccordions.has(subCat.name)}
+          onChange={() => handleAccordionChange(subCat.name)}
           sx={{
             borderColor: "divider",
             borderRadius: "8px !important",
@@ -71,57 +114,70 @@ export function ProductAccordionList({
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
               {products
                 .filter((p) => p.subCategory === subCat.name)
-                .map((product) => (
-                  <Box
-                    key={product.id}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      py: 1,
-                    }}
-                  >
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                      <Box
-                        sx={{
-                          width: 24,
-                          height: 24,
-                          bgcolor: "error.main",
-                          borderRadius: 0.5,
-                        }}
-                      />
-                      <Typography>{product.name}</Typography>
-                    </Box>
+                .map((product) => {
+                  const quantity = getProductQuantity(product.id, subCat.name);
+                  
+                  return (
                     <Box
+                      key={product.id}
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        gap: 1,
-                        border: "1px solid",
-                        borderColor: "divider",
-                        borderRadius: "24px",
-                        px: 2,
-                        py: 0.5,
+                        justifyContent: "space-between",
+                        py: 1,
                       }}
                     >
-                      <IconButton size="small" sx={{ color: "text.secondary" }}>
-                        <RemoveIcon fontSize="small" />
-                      </IconButton>
-                      <Typography
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                        <Box
+                          sx={{
+                            width: 24,
+                            height: 24,
+                            bgcolor: "error.main",
+                            borderRadius: 0.5,
+                          }}
+                        />
+                        <Typography>{product.name}</Typography>
+                      </Box>
+                      <Box
                         sx={{
-                          minWidth: 32,
-                          textAlign: "center",
-                          fontWeight: 500,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          border: "1px solid",
+                          borderColor: "divider",
+                          borderRadius: "24px",
+                          px: 2,
+                          py: 0.5,
                         }}
                       >
-                        0
-                      </Typography>
-                      <IconButton size="small" sx={{ color: "text.secondary" }}>
-                        <AddIcon fontSize="small" />
-                      </IconButton>
+                        <IconButton 
+                          size="small" 
+                          sx={{ color: "text.secondary" }}
+                          onClick={() => handleRemoveProduct(product.id)}
+                          disabled={quantity === 0}
+                        >
+                          <RemoveIcon fontSize="small" />
+                        </IconButton>
+                        <Typography
+                          sx={{
+                            minWidth: 32,
+                            textAlign: "center",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {quantity}
+                        </Typography>
+                        <IconButton 
+                          size="small" 
+                          sx={{ color: "text.secondary" }}
+                          onClick={() => handleAddProduct(product.id)}
+                        >
+                          <AddIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
                     </Box>
-                  </Box>
-                ))}
+                  );
+                })}
             </Box>
           </AccordionDetails>
         </Accordion>

@@ -234,10 +234,55 @@ Implement the custom package selection page UI with MUI components based on the 
 
 ---
 
+### Redux Integration with UI Components
+
+**What I asked AI to do:**
+
+Connect Redux store to UI components to enable functional cart management based on the requirements I analyzed from beije.co:
+
+**Integration Requirements I Defined:**
+
+1. **ProductAccordionList.tsx - Product Quantity Management:**
+   - Connect Redux hooks (`useAppDispatch`, `useAppSelector`) to read cart state
+   - Implement `getProductQuantity` helper to find each product's quantity from Redux
+   - Add `handleAddProduct` to dispatch `addProduct` action when + button clicked
+   - Add `handleRemoveProduct` to dispatch `removeProduct` action when - button clicked
+   - Disable - button when quantity is 0
+   - Display real-time quantity from Redux state instead of static 0
+   - Implement accordion state management to preserve open/closed states (multiple accordions can be open simultaneously)
+   - Set first accordion as default open
+
+2. **CartSummary.tsx - Real-time Cart Display:**
+   - Read `cartItems` and `totalPrice` from Redux state
+   - Display "Özel Paketin" header with "2 ayda bir gönderim" badge (matching beije design)
+   - Show empty state message when cart is empty
+   - Render sub-category cards with delete button for each group
+   - Display products in format: `{quantity} x {productName}` with calculated total price
+   - Calculate price per product: `(quantity / quantityStep) × pricePerUnit`
+   - Price changes based on purchase type (subscription vs one-time)
+   - Implement delete functionality using `clearSubCategory` action
+   - "Sepete Ekle" button disabled when empty (grey), active when filled (black)
+   - Show total cart price on button in real-time
+
+3. **Page Layout Adjustments:**
+   - Left section (product selection): `flex-1` with `max-w-[500px]`
+   - Right section (cart): `flex-1` with `max-w-[440px]`
+   - Used `justify-between` for better spacing between sections
+   - More compact and closer to beije.co original design
+
+**Key Behavior Requirements:**
+- Real-time synchronization: Clicking + / - buttons immediately updates both quantity display and cart
+- Automatic cart updates: Adding products creates sub-category groups, removing last product auto-deletes group
+- Price calculation accuracy: Each product shows total price (not unit price) based on quantity
+- Accordion state persistence: Open/closed states remain when switching between products
+
+**Result:** Fully functional product selection and cart system with real-time Redux state management. Users can add/remove products, see live price calculations, and manage cart items by sub-category.
+
+---
+
 ### Next Steps
-- Implement Redux integration for product quantity management
-- Add functional + / - buttons in ProductAccordionList
-- Build cart summary with real-time price calculation
 - Setup NestJS backend
+- Implement email verification API
 - Add tests
+- Deploy live demo (Vercel + Railway)
 
