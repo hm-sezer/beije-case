@@ -142,6 +142,56 @@ Create TypeScript type definitions based on the beije.co/custom-packet page stru
 
 ---
 
+### Redux Store Implementation
+
+**What I asked AI to do:**
+
+Implement Redux Toolkit store for cart management based on the cart behavior I analyzed from beije.co:
+
+**Cart Requirements I Defined:**
+- Products must be grouped by sub-category (e.g., "beije Ped", "Isı Bandı")
+- Each sub-category group has its own purchase type (subscription or one-time)
+- Multiple products can exist within one sub-category group
+- Adding a product to an existing sub-category should increment quantity
+- Removing the last product from a sub-category should remove the entire group
+- Price calculation must respect purchase type (subscription price vs one-time price)
+- Cart should support separate views for subscription and one-time items
+
+**Redux Structure I Requested:**
+
+1. **Store Setup** (`store/store.ts`):
+   - Configure Redux Toolkit store
+   - Export TypeScript types for RootState and AppDispatch
+
+2. **Custom Hooks** (`store/hooks.ts`):
+   - Type-safe useAppDispatch and useAppSelector hooks
+   - Using React-Redux's withTypes API for better TypeScript support
+
+3. **Package Slice** (`store/slices/packageSlice.ts`) with actions:
+   - `addProduct`: Add or increment product quantity within sub-category groups
+   - `removeProduct`: Decrement quantity and auto-remove empty groups
+   - `updateProductQuantity`: Direct quantity update for input fields
+   - `setPurchaseType`: Change subscription/one-time selection per sub-category
+   - `clearSubCategory`: Remove entire sub-category group
+   - `clearCart`: Empty the cart
+
+4. **Selectors for data access**:
+   - `selectCartItems`: All cart items
+   - `selectSubscriptionItems`: Filter subscription-only groups
+   - `selectOneTimeItems`: Filter one-time purchase groups  
+   - `selectTotalPrice`: Calculate total with purchase-type-based pricing
+   - `selectSubCategoryTotal`: Calculate price per sub-category
+
+5. **Provider Setup** (`components/providers.tsx`):
+   - Create client component wrapper for Redux Provider
+   - Integrate into app layout for global state access
+
+**Why:** Needed complete state management matching beije's cart logic with sub-category grouping and dual pricing structure.
+
+**Result:** Fully functional Redux store with sub-category-based cart management, purchase type flexibility, and accurate price calculations.
+
+---
+
 ### Next Steps
 - Setup NestJS backend
 - Implement custom package selection page
