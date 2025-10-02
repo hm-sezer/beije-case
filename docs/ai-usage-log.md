@@ -61,8 +61,47 @@ Create a `README.md` file with the following structure:
 
 ---
 
+## Frontend Development - October 2, 2025
+
+### Next.js and Dependencies Setup
+
+**What I did manually:**
+
+1. **Next.js Initialization**:
+   ```bash
+   cd frontend
+   npx create-next-app@latest .
+   ```
+   - Setup Next.js 15 with TypeScript
+   - Configured App Router
+   - Enabled ESLint
+
+2. **shadcn Setup** (using latest CLI):
+   ```bash
+   npx shadcn@latest init
+   ```
+   - Selected neutral color theme
+   - Configured for Next.js App Router
+   - CSS variables enabled
+
+3. **shadcn Components**:
+   ```bash
+   npx shadcn@latest add button card accordion badge separator
+   ```
+
+4. **State Management and Utils**:
+   ```bash
+   npm install @reduxjs/toolkit react-redux axios
+   ```
+
+**Why:** Needed component library and state management infrastructure before building the custom package selection page replica.
+
+**Result:** Clean Next.js 15 setup with shadcn components and Redux ready for development.
+
+---
+
 ### Next Steps
 - Setup NestJS backend
-- Setup Next.js frontend
-- Implement features
+- Implement custom package selection page
+- Add tests
 
