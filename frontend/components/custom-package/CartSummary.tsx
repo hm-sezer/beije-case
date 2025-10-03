@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Box, Typography, Paper, Button, Chip } from "@mui/material";
 import { useAppSelector } from "@/store/hooks";
 import { selectTotalPrice } from "@/store/slices/packageSlice";
@@ -8,11 +9,16 @@ import { CartItem } from "./CartItem";
 import { CART, APP_CONFIG } from "@/constants/app";
 
 export function CartSummary() {
+  const router = useRouter();
   const cartItems = useAppSelector((state) => state.package.items);
   const totalPrice = useAppSelector(selectTotalPrice);
   const { handleClearSubCategory } = useCart();
 
   const isEmpty = cartItems.length === 0;
+
+  const handleAddToCart = () => {
+    router.push("/cart");
+  };
 
   return (
     <Paper
@@ -82,6 +88,7 @@ export function CartSummary() {
         variant="contained"
         fullWidth
         disabled={isEmpty}
+        onClick={handleAddToCart}
         sx={{
           bgcolor: isEmpty ? "grey.300" : "black",
           color: "white",
