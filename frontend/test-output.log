@@ -1,0 +1,479 @@
+
+> frontend@0.1.0 test:e2e
+> playwright test
+
+
+Running 11 tests using 5 workers
+
+[1A[2K[1/11] [chromium] › e2e/cart.spec.ts:111:7 › Cart Page › should display discount code input
+[1A[2K[2/11] [chromium] › e2e/cart.spec.ts:30:7 › Cart Page › should display cart items correctly
+[1A[2K[3/11] [chromium] › e2e/cart.spec.ts:46:7 › Cart Page › should change purchase type
+[1A[2K[4/11] [chromium] › e2e/cart.spec.ts:89:7 › Cart Page › should open edit dialog
+[1A[2K[5/11] [chromium] › e2e/cart.spec.ts:73:7 › Cart Page › should delete package from cart
+[1A[2K  1) [chromium] › e2e/cart.spec.ts:89:7 › Cart Page › should open edit dialog ──────────────────────
+
+    [31mTest timeout of 30000ms exceeded while running "beforeEach" hook.[39m
+
+      2 |
+      3 | test.describe('Cart Page', () => {
+    > 4 |   test.beforeEach(async ({ page }) => {
+        |        ^
+      5 |     // Navigate to home page
+      6 |     await page.goto('/');
+      7 |     
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:4:8
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    54 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      18 |     // Add product
+      19 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 20 |     await addButton.click();
+         |                     ^
+      21 |     
+      22 |     // Wait for cart to update
+      23 |     await page.waitForSelector('text=10 adet Standart Ped', { state: 'visible' });
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:20:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cart-Cart-Page-should-open-edit-dialog-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cart-Cart-Page-should-open-edit-dialog-chromium/error-context.md
+
+
+[1A[2K  2) [chromium] › e2e/cart.spec.ts:30:7 › Cart Page › should display cart items correctly ──────────
+
+    [31mTest timeout of 30000ms exceeded while running "beforeEach" hook.[39m
+
+      2 |
+      3 | test.describe('Cart Page', () => {
+    > 4 |   test.beforeEach(async ({ page }) => {
+        |        ^
+      5 |     // Navigate to home page
+      6 |     await page.goto('/');
+      7 |     
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:4:8
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    54 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      18 |     // Add product
+      19 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 20 |     await addButton.click();
+         |                     ^
+      21 |     
+      22 |     // Wait for cart to update
+      23 |     await page.waitForSelector('text=10 adet Standart Ped', { state: 'visible' });
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:20:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cart-Cart-Page-should-display-cart-items-correctly-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cart-Cart-Page-should-display-cart-items-correctly-chromium/error-context.md
+
+
+[1A[2K  3) [chromium] › e2e/cart.spec.ts:111:7 › Cart Page › should display discount code input ──────────
+
+    [31mTest timeout of 30000ms exceeded while running "beforeEach" hook.[39m
+
+      2 |
+      3 | test.describe('Cart Page', () => {
+    > 4 |   test.beforeEach(async ({ page }) => {
+        |        ^
+      5 |     // Navigate to home page
+      6 |     await page.goto('/');
+      7 |     
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:4:8
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    54 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      18 |     // Add product
+      19 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 20 |     await addButton.click();
+         |                     ^
+      21 |     
+      22 |     // Wait for cart to update
+      23 |     await page.waitForSelector('text=10 adet Standart Ped', { state: 'visible' });
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:20:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cart-Cart-Page-should-display-discount-code-input-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cart-Cart-Page-should-display-discount-code-input-chromium/error-context.md
+
+
+[1A[2K  4) [chromium] › e2e/cart.spec.ts:46:7 › Cart Page › should change purchase type ──────────────────
+
+    [31mTest timeout of 30000ms exceeded while running "beforeEach" hook.[39m
+
+      2 |
+      3 | test.describe('Cart Page', () => {
+    > 4 |   test.beforeEach(async ({ page }) => {
+        |        ^
+      5 |     // Navigate to home page
+      6 |     await page.goto('/');
+      7 |     
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:4:8
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    54 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      18 |     // Add product
+      19 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 20 |     await addButton.click();
+         |                     ^
+      21 |     
+      22 |     // Wait for cart to update
+      23 |     await page.waitForSelector('text=10 adet Standart Ped', { state: 'visible' });
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:20:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cart-Cart-Page-should-change-purchase-type-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cart-Cart-Page-should-change-purchase-type-chromium/error-context.md
+
+
+[1A[2K  5) [chromium] › e2e/cart.spec.ts:73:7 › Cart Page › should delete package from cart ──────────────
+
+    [31mTest timeout of 30000ms exceeded while running "beforeEach" hook.[39m
+
+      2 |
+      3 | test.describe('Cart Page', () => {
+    > 4 |   test.beforeEach(async ({ page }) => {
+        |        ^
+      5 |     // Navigate to home page
+      6 |     await page.goto('/');
+      7 |     
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:4:8
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    54 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      18 |     // Add product
+      19 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 20 |     await addButton.click();
+         |                     ^
+      21 |     
+      22 |     // Wait for cart to update
+      23 |     await page.waitForSelector('text=10 adet Standart Ped', { state: 'visible' });
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:20:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cart-Cart-Page-should-delete-package-from-cart-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cart-Cart-Page-should-delete-package-from-cart-chromium/error-context.md
+
+
+[1A[2K[6/11] [chromium] › e2e/custom-package.spec.ts:8:7 › Custom Package Selection › should add product to cart and navigate to cart page
+[1A[2K[7/11] [chromium] › e2e/cart.spec.ts:143:7 › Cart Page › should display subscription info accordion
+[1A[2K[8/11] [chromium] › e2e/cart.spec.ts:124:7 › Cart Page › should display order summary
+[1A[2K[9/11] [chromium] › e2e/custom-package.spec.ts:63:7 › Custom Package Selection › should display empty cart message when no products added
+[1A[2K[10/11] [chromium] › e2e/custom-package.spec.ts:40:7 › Custom Package Selection › should manage product quantities
+[1A[2K  6) [chromium] › e2e/custom-package.spec.ts:63:7 › Custom Package Selection › should display empty cart message when no products added 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m failed
+
+    Locator:  locator('text=Sepetiniz boş').first()
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('text=Sepetiniz boş').first()[22m
+    [2m    9 × locator resolved to <p class="MuiTypography-root MuiTypography-body2 css-1wmsf9d-MuiTypography-root">Sepetiniz boş. Ürün seçmeye başlayın!</p>[22m
+    [2m      - unexpected value "hidden"[22m
+
+
+      67 |     
+      68 |     // Verify empty cart message is visible
+    > 69 |     await expect(page.locator('text=Sepetiniz boş').first()).toBeVisible();
+         |                                                              ^
+      70 |     
+      71 |     // Verify "Sepete Ekle" button is disabled
+      72 |     const addToCartButton = page.locator('button:has-text("Sepete Ekle")').first();
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/custom-package.spec.ts:69:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/custom-package-Custom-Pack-fe85b-sage-when-no-products-added-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/custom-package-Custom-Pack-fe85b-sage-when-no-products-added-chromium/error-context.md
+
+
+[1A[2K[11/11] [chromium] › e2e/custom-package.spec.ts:76:7 › Custom Package Selection › should switch between product tabs
+[1A[2K  7) [chromium] › e2e/cart.spec.ts:124:7 › Cart Page › should display order summary ────────────────
+
+    [31mTest timeout of 30000ms exceeded while running "beforeEach" hook.[39m
+
+      2 |
+      3 | test.describe('Cart Page', () => {
+    > 4 |   test.beforeEach(async ({ page }) => {
+        |        ^
+      5 |     // Navigate to home page
+      6 |     await page.goto('/');
+      7 |     
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:4:8
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    53 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      18 |     // Add product
+      19 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 20 |     await addButton.click();
+         |                     ^
+      21 |     
+      22 |     // Wait for cart to update
+      23 |     await page.waitForSelector('text=10 adet Standart Ped', { state: 'visible' });
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:20:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cart-Cart-Page-should-display-order-summary-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cart-Cart-Page-should-display-order-summary-chromium/error-context.md
+
+
+[1A[2K  8) [chromium] › e2e/custom-package.spec.ts:40:7 › Custom Package Selection › should manage product quantities 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    53 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+
+
+      47 |     // Add product multiple times
+      48 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 49 |     await addButton.click();
+         |                     ^
+      50 |     await addButton.click();
+      51 |     
+      52 |     // Verify quantity increased
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/custom-package.spec.ts:49:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/custom-package-Custom-Pack-1d0f8-d-manage-product-quantities-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/custom-package-Custom-Pack-1d0f8-d-manage-product-quantities-chromium/error-context.md
+
+
+[1A[2K  9) [chromium] › e2e/cart.spec.ts:143:7 › Cart Page › should display subscription info accordion ──
+
+    [31mTest timeout of 30000ms exceeded while running "beforeEach" hook.[39m
+
+      2 |
+      3 | test.describe('Cart Page', () => {
+    > 4 |   test.beforeEach(async ({ page }) => {
+        |        ^
+      5 |     // Navigate to home page
+      6 |     await page.goto('/');
+      7 |     
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:4:8
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    54 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      18 |     // Add product
+      19 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 20 |     await addButton.click();
+         |                     ^
+      21 |     
+      22 |     // Wait for cart to update
+      23 |     await page.waitForSelector('text=10 adet Standart Ped', { state: 'visible' });
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/cart.spec.ts:20:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cart-Cart-Page-should-display-subscription-info-accordion-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cart-Cart-Page-should-display-subscription-info-accordion-chromium/error-context.md
+
+
+[1A[2K  10) [chromium] › e2e/custom-package.spec.ts:8:7 › Custom Package Selection › should add product to cart and navigate to cart page 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('increase-quantity').first()[22m
+    [2m    - locator resolved to <button tabindex="0" type="button" data-testid="increase-quantity" class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1374xo4-MuiButtonBase-root-MuiIconButton-root">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is not visible[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    54 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is not visible[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      17 |     // Add product (click + button in QuantitySelector)
+      18 |     const addButton = page.getByTestId('increase-quantity').first();
+    > 19 |     await addButton.click();
+         |                     ^
+      20 |     
+      21 |     // Verify product appears in cart summary
+      22 |     await expect(page.locator('text=10 adet Standart Ped')).toBeVisible();
+        at /Users/hasanmertsezer/Desktop/beije-case/frontend/e2e/custom-package.spec.ts:19:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/custom-package-Custom-Pack-4a9f4-t-and-navigate-to-cart-page-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/custom-package-Custom-Pack-4a9f4-t-and-navigate-to-cart-page-chromium/error-context.md
+
+
+[1A[2K  10 failed
+    [chromium] › e2e/cart.spec.ts:30:7 › Cart Page › should display cart items correctly ───────────
+    [chromium] › e2e/cart.spec.ts:46:7 › Cart Page › should change purchase type ───────────────────
+    [chromium] › e2e/cart.spec.ts:73:7 › Cart Page › should delete package from cart ───────────────
+    [chromium] › e2e/cart.spec.ts:89:7 › Cart Page › should open edit dialog ───────────────────────
+    [chromium] › e2e/cart.spec.ts:111:7 › Cart Page › should display discount code input ───────────
+    [chromium] › e2e/cart.spec.ts:124:7 › Cart Page › should display order summary ─────────────────
+    [chromium] › e2e/cart.spec.ts:143:7 › Cart Page › should display subscription info accordion ───
+    [chromium] › e2e/custom-package.spec.ts:8:7 › Custom Package Selection › should add product to cart and navigate to cart page 
+    [chromium] › e2e/custom-package.spec.ts:40:7 › Custom Package Selection › should manage product quantities 
+    [chromium] › e2e/custom-package.spec.ts:63:7 › Custom Package Selection › should display empty cart message when no products added 
+  1 passed (1.0m)
+
+[36m  Serving HTML report at http://localhost:9323. Press Ctrl+C to quit.[39m

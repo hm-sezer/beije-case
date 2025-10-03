@@ -37,6 +37,7 @@ export function QuantitySelector({
         sx={{ color: "text.secondary" }}
         onClick={onDecrement}
         disabled={!canDecrement}
+        data-testid="decrease-quantity"
       >
         <RemoveIcon fontSize="small" />
       </IconButton>
@@ -54,6 +55,7 @@ export function QuantitySelector({
         sx={{ color: "text.secondary" }}
         onClick={onIncrement}
         disabled={!canIncrement}
+        data-testid="increase-quantity"
       >
         <AddIcon fontSize="small" />
       </IconButton>

@@ -151,6 +151,41 @@ npm run dev
 # Frontend will run on http://localhost:3000
 ```
 
+### Running Tests
+
+#### Frontend E2E Tests (Playwright)
+
+The frontend includes comprehensive E2E tests covering user flows:
+
+```bash
+# Run all E2E tests (headless mode)
+cd frontend
+npm run test:e2e
+
+# Run tests with UI (interactive mode)
+npm run test:e2e:ui
+
+# Run tests in headed mode (see browser)
+npm run test:e2e:headed
+
+# View last test report
+npm run test:e2e:report
+```
+
+**Test Coverage:**
+- ✅ Custom package selection flow
+- ✅ Add/remove products from cart
+- ✅ Product quantity management
+- ✅ Cart page functionality
+- ✅ Purchase type change (subscription/one-time)
+- ✅ Package deletion
+- ✅ Edit package dialog
+- ✅ Discount code UI
+- ✅ Order summary display
+- ✅ Tab navigation
+
+**Note:** Tests automatically start the dev server before running. Make sure port 3000 is available.
+
 ## 📋 Features
 
 ### Frontend
