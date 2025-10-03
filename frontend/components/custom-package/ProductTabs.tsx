@@ -2,6 +2,7 @@
 
 import { Tabs, Tab, Box } from "@mui/material";
 import { ProductCategory } from "@/types/product";
+import { PRODUCT_TABS } from "@/constants/app";
 
 interface ProductTabsProps {
   activeTab: ProductCategory;
@@ -24,7 +25,7 @@ export function ProductTabs({ activeTab, onTabChange }: ProductTabsProps) {
         }}
       >
         <Tab
-          label="Menstrüel Ürünler"
+          label={PRODUCT_TABS.MENSTRUAL}
           value={ProductCategory.MENSTRUAL}
           sx={{
             textTransform: "none",
@@ -40,7 +41,7 @@ export function ProductTabs({ activeTab, onTabChange }: ProductTabsProps) {
           }}
         />
         <Tab
-          label="Destekleyici Ürünler"
+          label={PRODUCT_TABS.SUPPORT}
           value={ProductCategory.SUPPORT}
           sx={{
             textTransform: "none",

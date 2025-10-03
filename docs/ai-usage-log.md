@@ -479,6 +479,62 @@ components/custom-package/
 
 ---
 
+### Constants Refactoring for Maintainability
+
+**What I asked AI to do:**
+
+Extract all hard-coded strings and configuration values into a centralized constants file to improve maintainability and prepare for future internationalization (i18n).
+
+**Problems Identified:**
+- Static strings scattered across multiple components
+- Hard-coded values like "2 ayda bir gönderim", "Kendi Paketini Oluştur", currency symbol (₺)
+- Difficult to maintain consistency across UI
+- No single source of truth for text content
+- Future i18n implementation would require touching every component
+
+**Refactoring Strategy I Defined:**
+
+**1. Create Constants File (`constants/app.ts`):**
+
+**Organized into logical groups:**
+- `PAGE_HEADER`: Title, "Nasıl Çalışır?" button, description text
+- `PRODUCT_TABS`: "Menstrüel Ürünler", "Destekleyici Ürünler" labels
+- `CART`: Cart title, delivery badge, description, empty message, button text
+- `APP_CONFIG`: Currency symbol (₺), delivery frequency (2 months)
+
+**2. Update Components to Use Constants:**
+
+**PageHeader.tsx:**
+- Replaced "Kendi Paketini Oluştur" → `PAGE_HEADER.TITLE`
+- Replaced "Nasıl Çalışır?" → `PAGE_HEADER.HOW_IT_WORKS`
+- Replaced description → `PAGE_HEADER.DESCRIPTION`
+
+**ProductTabs.tsx:**
+- Replaced "Menstrüel Ürünler" → `PRODUCT_TABS.MENSTRUAL`
+- Replaced "Destekleyici Ürünler" → `PRODUCT_TABS.SUPPORT`
+
+**CartSummary.tsx:**
+- Replaced "Özel Paketin" → `CART.TITLE`
+- Replaced "2 ayda bir gönderim" → `CART.DELIVERY_BADGE`
+- Replaced cart description → `CART.DESCRIPTION`
+- Replaced "Sepetiniz boş..." → `CART.EMPTY_MESSAGE`
+- Replaced "Sepete Ekle" → `CART.ADD_TO_CART_BUTTON`
+- Replaced "₺" → `APP_CONFIG.CURRENCY_SYMBOL`
+
+**Benefits Achieved:**
+- **Single Source of Truth:** All text content managed in one file
+- **Easy Updates:** Change "2 ayda bir" to "3 ayda bir" in one place
+- **Consistency:** Guaranteed same text across all components
+- **i18n Ready:** Simple to add language support later (en.ts, tr.ts)
+- **Better Searchability:** Find all app strings in one location
+- **Type Safety:** TypeScript `as const` prevents accidental mutations
+
+**Why:** Centralizing constants is a fundamental best practice for scalable applications, especially when preparing for multi-language support or frequent content updates.
+
+**Result:** All hard-coded strings eliminated. Future content changes require updating only `constants/app.ts` instead of hunting through multiple components.
+
+---
+
 ### Next Steps
 - Setup NestJS backend
 - Implement email verification API

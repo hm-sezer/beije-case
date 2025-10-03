@@ -1,11 +1,12 @@
 import { Box, Typography, Button } from "@mui/material";
+import { PAGE_HEADER } from "@/constants/app";
 
 export function PageHeader() {
   return (
     <Box sx={{ mb: 4 }}>
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="h5" component="h1" sx={{ fontWeight: 700, color: "text.primary" }}>
-          Kendi Paketini Oluştur
+          {PAGE_HEADER.TITLE}
         </Typography>
         <Button
           variant="text"
@@ -15,11 +16,11 @@ export function PageHeader() {
             "&:hover": { color: "text.primary" },
           }}
         >
-          Nasıl Çalışır?
+          {PAGE_HEADER.HOW_IT_WORKS}
         </Button>
       </Box>
       <Typography variant="body1" color="text.secondary">
-        Tercih ve ihtiyaçların doğrultusunda seçeceğin ürünlerden ve miktarlardan, sana özel bir paket oluşturalım.
+        {PAGE_HEADER.DESCRIPTION}
       </Typography>
     </Box>
   );

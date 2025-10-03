@@ -5,6 +5,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectTotalPrice } from "@/store/slices/packageSlice";
 import { useCart } from "@/hooks/useCart";
 import { CartItem } from "./CartItem";
+import { CART, APP_CONFIG } from "@/constants/app";
 
 export function CartSummary() {
   const cartItems = useAppSelector((state) => state.package.items);
@@ -28,7 +29,7 @@ export function CartSummary() {
       {/* Başlık + Badge */}
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="h6" fontWeight={700}>
-          Özel Paketin
+          {CART.TITLE}
         </Typography>
         <Chip
           icon={
@@ -43,7 +44,7 @@ export function CartSummary() {
               }}
             />
           }
-          label="2 ayda bir gönderim"
+          label={CART.DELIVERY_BADGE}
           sx={{
             bgcolor: "rgb(209, 237, 229)",
             color: "text.primary",
@@ -56,13 +57,13 @@ export function CartSummary() {
 
       {/* Açıklama */}
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Kişisel ihtiyacına yönelik istediğin miktarda Ped, Günlük Ped, Tampon veya destekleyici ürünler ekleyerek kendine özel bir paket oluşturabilirsin.
+        {CART.DESCRIPTION}
       </Typography>
 
       {/* Sepet İçeriği */}
       {isEmpty ? (
         <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 2 }}>
-          Sepetiniz boş. Ürün seçmeye başlayın!
+          {CART.EMPTY_MESSAGE}
         </Typography>
       ) : (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 3 }}>
@@ -98,7 +99,7 @@ export function CartSummary() {
           },
         }}
       >
-        Sepete Ekle (₺{totalPrice.toFixed(2)})
+        {CART.ADD_TO_CART_BUTTON} ({APP_CONFIG.CURRENCY_SYMBOL}{totalPrice.toFixed(2)})
       </Button>
     </Paper>
   );
