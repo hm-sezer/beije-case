@@ -41,11 +41,17 @@ npm install
 
 #### Backend Configuration
 
+**IMPORTANT:** Before creating `.env`, you must first set up MongoDB (see MongoDB Setup Options below).
+
 Create a `.env` file in the `backend/` folder with the following variables:
 
 ```env
 # Database Configuration
+# ⚠️ Choose ONE of the options below based on your MongoDB setup:
+# Option 1 - Local MongoDB (requires MongoDB installed locally):
 MONGODB_URI=mongodb://localhost:27017/beije-case
+# Option 2 - MongoDB Atlas (cloud, no local installation needed):
+# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/beije-case
 
 # Email Service Configuration (Gmail SMTP)
 SMTP_HOST=smtp.gmail.com
@@ -69,23 +75,68 @@ FRONTEND_URL=http://localhost:3000
 4. Generate a new app password for "Mail"
 5. Copy the 16-character password and paste it as `SMTP_PASS`
 
-**MongoDB Setup Options:**
+#### MongoDB Setup Options
 
-**Option 1: Local MongoDB**
-```bash
-# Install MongoDB locally (macOS with Homebrew)
-brew install mongodb-community
-brew services start mongodb-community
+Choose **ONE** of the following options:
 
-# Use default connection string
-MONGODB_URI=mongodb://localhost:27017/beije-case
-```
+**Option 1: Local MongoDB** (Requires MongoDB installation)
 
-**Option 2: MongoDB Atlas (Cloud)**
-1. Create a free account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a new cluster (free tier available)
-3. Get your connection string from "Connect" → "Connect your application"
-4. Replace `MONGODB_URI` with your Atlas connection string
+1. **Install MongoDB:**
+   ```bash
+   # macOS (with Homebrew)
+   brew tap mongodb/brew
+   brew install mongodb-community
+   
+   # Start MongoDB service
+   brew services start mongodb-community
+   ```
+   
+   For other operating systems, visit: https://www.mongodb.com/docs/manual/installation/
+
+2. **Use in `.env`:**
+   ```env
+   MONGODB_URI=mongodb://localhost:27017/beije-case
+   ```
+
+---
+
+**Option 2: MongoDB Atlas** (Cloud - No local installation needed, recommended)
+
+1. **Create Account:**
+   - Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+   - Sign up for free account
+
+2. **Create Cluster:**
+   - Click "Create" → "Deploy a database"
+   - Choose **M0 Free tier**
+   - Select a cloud provider and region
+   - Click "Create Cluster" (takes 3-5 minutes)
+
+3. **Set up Database Access:**
+   - Go to "Database Access" in left sidebar
+   - Click "Add New Database User"
+   - Choose "Password" authentication
+   - Create username and password (save these!)
+   - Add user
+
+4. **Set up Network Access:**
+   - Go to "Network Access" in left sidebar
+   - Click "Add IP Address"
+   - Click "Allow Access from Anywhere" (for development)
+   - Confirm
+
+5. **Get Connection String:**
+   - Go back to "Database" → Click "Connect" on your cluster
+   - Choose "Connect your application"
+   - Copy the connection string (looks like: `mongodb+srv://username:password@cluster...`)
+   - Replace `<username>`, `<password>`, and database name
+
+6. **Use in `.env`:**
+   ```env
+   MONGODB_URI=mongodb+srv://yourusername:yourpassword@cluster0.xxxxx.mongodb.net/beije-case
+   ```
+
+**💡 Tip:** MongoDB Atlas is recommended because it requires no local installation and provides a free tier perfect for testing.
 
 ### Running the Application
 
