@@ -8,7 +8,6 @@ This is a monorepo containing:
 
 - **`frontend/`** - Next.js application with custom package selection
 - **`backend/`** - NestJS API server with email verification
-- **`shared/`** - Shared types and utilities
 - **`docs/`** - Additional documentation
 
 ## 🚀 Quick Start
