@@ -7,17 +7,15 @@ import {
   AccordionDetails,
   Box,
   Typography,
-  IconButton,
   Avatar,
   Alert,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import { SubCategoryInfo } from "@/types/product";
 import { products } from "@/data/products";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addProduct, removeProduct } from "@/store/slices/packageSlice";
+import { ProductItem } from "./ProductItem";
 
 interface ProductAccordionListProps {
   subCategories: SubCategoryInfo[];
@@ -118,65 +116,13 @@ export function ProductAccordionList({
                   const quantity = getProductQuantity(product.id, subCat.name);
                   
                   return (
-                    <Box
+                    <ProductItem
                       key={product.id}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        py: 1,
-                      }}
-                    >
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                        <Box
-                          sx={{
-                            width: 24,
-                            height: 24,
-                            bgcolor: "error.main",
-                            borderRadius: 0.5,
-                          }}
-                        />
-                        <Typography>{product.name}</Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 1,
-                          border: "1px solid",
-                          borderColor: "divider",
-                          borderRadius: "24px",
-                          px: 2,
-                          py: 0.5,
-                        }}
-                      >
-                        <IconButton 
-                          size="small" 
-                          sx={{ color: "text.secondary" }}
-                          onClick={() => handleRemoveProduct(product.id)}
-                          disabled={quantity === 0}
-                        >
-                          <RemoveIcon fontSize="small" />
-                        </IconButton>
-                        <Typography
-                          sx={{
-                            minWidth: 32,
-                            textAlign: "center",
-                            fontWeight: 500,
-                          }}
-                        >
-                          {quantity}
-                        </Typography>
-                        <IconButton 
-                          size="small" 
-                          sx={{ color: "text.secondary" }}
-                          onClick={() => handleAddProduct(product.id)}
-                          disabled={quantity >= product.maxQuantity}
-                        >
-                          <AddIcon fontSize="small" />
-                        </IconButton>
-                      </Box>
-                    </Box>
+                      product={product}
+                      quantity={quantity}
+                      onAdd={() => handleAddProduct(product.id)}
+                      onRemove={() => handleRemoveProduct(product.id)}
+                    />
                   );
                 })}
             </Box>

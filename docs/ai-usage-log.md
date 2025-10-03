@@ -347,6 +347,61 @@ Resolve React hydration error occurring when using MUI with Next.js App Router (
 
 ---
 
+### Component Refactoring for Better Modularity
+
+**What I asked AI to do:**
+
+Refactor ProductAccordionList component to improve code maintainability, reusability, and testability by extracting nested UI logic into separate components.
+
+**Problem Identified:**
+- `ProductAccordionList.tsx` was 190 lines with multiple responsibilities
+- Product item rendering and quantity selector logic were tightly coupled
+- Difficult to test and reuse individual pieces
+- Code duplication potential when needing similar UI elsewhere
+
+**Refactoring Strategy I Defined:**
+
+1. **Extract QuantitySelector Component:**
+   - Isolated + / - button logic into reusable component
+   - Props: `quantity`, `onIncrement`, `onDecrement`, `canIncrement`, `canDecrement`
+   - Benefits: Can be used anywhere quantity selection is needed
+   - Single responsibility: Display and handle quantity changes
+
+2. **Extract ProductItem Component:**
+   - Separated single product row rendering
+   - Props: `product`, `quantity`, `onAdd`, `onRemove`
+   - Encapsulates product display + quantity selector
+   - Handles max/min quantity validation internally
+   - Reusable across different product lists
+
+3. **Simplify ProductAccordionList:**
+   - Reduced from 190 lines to 135 lines
+   - Now only responsible for accordion container logic
+   - Uses ProductItem for rendering individual products
+   - Cleaner, more focused component
+
+**Component Structure Created:**
+
+```
+components/custom-package/
+├── QuantitySelector.tsx (60 lines)    - Reusable quantity control
+├── ProductItem.tsx (50 lines)         - Reusable product row
+└── ProductAccordionList.tsx (135 lines) - Container logic only
+```
+
+**Benefits Achieved:**
+- **Improved Testability:** Each component can be tested in isolation
+- **Better Reusability:** QuantitySelector and ProductItem can be used elsewhere
+- **Enhanced Readability:** Each component has single, clear responsibility
+- **Easier Maintenance:** Changes to quantity UI only affect one component
+- **Reduced Complexity:** ProductAccordionList is now simpler and focused
+
+**Why:** Following Single Responsibility Principle and component composition patterns improves code quality and developer experience.
+
+**Result:** More modular, maintainable codebase with reusable components. Future features requiring quantity selection or product display can leverage these components.
+
+---
+
 ### Next Steps
 - Setup NestJS backend
 - Implement email verification API
