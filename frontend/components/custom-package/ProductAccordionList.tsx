@@ -13,19 +13,41 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { SubCategoryInfo } from "@/types/product";
 import { products } from "@/data/products";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { addProduct, removeProduct } from "@/store/slices/packageSlice";
+import { useCart } from "@/hooks/useCart";
+import { useProductQuantity } from "@/hooks/useProductQuantity";
 import { ProductItem } from "./ProductItem";
 
 interface ProductAccordionListProps {
   subCategories: SubCategoryInfo[];
 }
 
+function ProductItemWithQuantity({
+  product,
+  subCategory,
+  onAdd,
+  onRemove,
+}: {
+  product: any;
+  subCategory: string;
+  onAdd: () => void;
+  onRemove: () => void;
+}) {
+  const quantity = useProductQuantity(product.id, subCategory);
+  
+  return (
+    <ProductItem
+      product={product}
+      quantity={quantity}
+      onAdd={onAdd}
+      onRemove={onRemove}
+    />
+  );
+}
+
 export function ProductAccordionList({
   subCategories,
 }: ProductAccordionListProps) {
-  const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.package.items);
+  const { handleAddProduct, handleRemoveProduct } = useCart();
   const [expandedAccordions, setExpandedAccordions] = React.useState<Set<string>>(
     new Set([subCategories[0]?.name]) // İlk accordion default açık
   );
@@ -41,25 +63,6 @@ export function ProductAccordionList({
       }
       return newSet;
     });
-  };
-
-  // Her product için quantity'yi bul
-  const getProductQuantity = (productId: string, subCategory: string): number => {
-    const cartItem = cartItems.find((item) => item.subCategory === subCategory);
-    if (!cartItem) return 0;
-    
-    const product = cartItem.products.find((p) => p.productId === productId);
-    return product?.quantity || 0;
-  };
-
-  // + butonuna basıldığında
-  const handleAddProduct = (productId: string) => {
-    dispatch(addProduct({ productId }));
-  };
-
-  // - butonuna basıldığında
-  const handleRemoveProduct = (productId: string) => {
-    dispatch(removeProduct(productId));
   };
 
   return (
@@ -112,19 +115,15 @@ export function ProductAccordionList({
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
               {products
                 .filter((p) => p.subCategory === subCat.name)
-                .map((product) => {
-                  const quantity = getProductQuantity(product.id, subCat.name);
-                  
-                  return (
-                    <ProductItem
-                      key={product.id}
-                      product={product}
-                      quantity={quantity}
-                      onAdd={() => handleAddProduct(product.id)}
-                      onRemove={() => handleRemoveProduct(product.id)}
-                    />
-                  );
-                })}
+                .map((product) => (
+                  <ProductItemWithQuantity
+                    key={product.id}
+                    product={product}
+                    subCategory={subCat.name}
+                    onAdd={() => handleAddProduct(product.id)}
+                    onRemove={() => handleRemoveProduct(product.id)}
+                  />
+                ))}
             </Box>
           </AccordionDetails>
         </Accordion>

@@ -402,6 +402,83 @@ components/custom-package/
 
 ---
 
+### Custom Hooks and Further Refactoring
+
+**What I asked AI to do:**
+
+Continue improving code modularity by extracting Redux logic into custom hooks and separating CartSummary's nested rendering logic.
+
+**Problems Identified:**
+- Redux logic (add/remove/clear) duplicated across components
+- `getProductQuantity` helper function repeated in multiple places
+- CartSummary component was 165 lines with complex nested cart item rendering
+- Difficult to reuse cart operations without copy-pasting code
+
+**Refactoring Strategy I Defined:**
+
+**1. Create Custom Hooks for Redux Logic:**
+
+**`hooks/useProductQuantity.ts`:**
+- Encapsulates logic to get product quantity from Redux store
+- Takes `productId` and `subCategory` as parameters
+- Returns current quantity (0 if not in cart)
+- Eliminates duplicate `getProductQuantity` helper functions
+
+**`hooks/useCart.ts`:**
+- Centralizes all cart operations in one reusable hook
+- Provides: `handleAddProduct`, `handleRemoveProduct`, `handleClearSubCategory`
+- Wraps Redux dispatch calls for cleaner component code
+- Single source of truth for cart actions
+
+**2. Extract CartItem Component:**
+
+**`components/custom-package/CartItem.tsx`:**
+- Isolated sub-category cart card rendering
+- Handles product list display and price calculations
+- Takes `item` and `onDelete` as props
+- Self-contained price calculation logic (quantity × price per unit)
+
+**3. Refactor Components to Use Hooks:**
+
+**ProductAccordionList.tsx:**
+- Now uses `useCart()` hook instead of direct Redux dispatch
+- Uses `useProductQuantity()` hook via wrapper component
+- Cleaner, more declarative code
+- No direct Redux dependencies (abstracted away)
+
+**CartSummary.tsx:**
+- Reduced from **165 lines to 95 lines** (42% reduction!)
+- Now uses `useCart()` hook for delete operations
+- Renders `<CartItem>` components instead of inline JSX
+- Much more readable and maintainable
+
+**Final Structure:**
+
+```
+hooks/
+├── useCart.ts                    - Cart operations hook
+└── useProductQuantity.ts         - Quantity getter hook
+
+components/custom-package/
+├── CartItem.tsx                  - Sub-category cart card
+├── CartSummary.tsx (95 lines)    - Simplified container
+└── ProductAccordionList.tsx      - Uses custom hooks
+```
+
+**Benefits Achieved:**
+- **DRY Principle:** Redux logic written once, used everywhere
+- **Easier Testing:** Hooks can be tested independently
+- **Better Abstraction:** Components don't need to know Redux internals
+- **Improved Readability:** CartSummary 42% shorter and clearer
+- **Reusable Logic:** Any component can use `useCart` or `useProductQuantity`
+- **Centralized Maintenance:** Changes to cart logic happen in one place
+
+**Why:** Custom hooks are React's recommended pattern for sharing stateful logic between components, reducing coupling and improving code organization.
+
+**Result:** Significantly cleaner codebase with well-abstracted Redux logic. Components are now more focused on UI rendering while hooks handle business logic.
+
+---
+
 ### Next Steps
 - Setup NestJS backend
 - Implement email verification API

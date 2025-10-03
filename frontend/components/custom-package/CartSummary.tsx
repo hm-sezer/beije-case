@@ -1,21 +1,17 @@
 "use client";
 
-import { Box, Typography, Paper, Button, Chip, IconButton } from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { clearSubCategory, selectTotalPrice } from "@/store/slices/packageSlice";
-import { products } from "@/data/products";
+import { Box, Typography, Paper, Button, Chip } from "@mui/material";
+import { useAppSelector } from "@/store/hooks";
+import { selectTotalPrice } from "@/store/slices/packageSlice";
+import { useCart } from "@/hooks/useCart";
+import { CartItem } from "./CartItem";
 
 export function CartSummary() {
-  const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.package.items);
   const totalPrice = useAppSelector(selectTotalPrice);
+  const { handleClearSubCategory } = useCart();
 
   const isEmpty = cartItems.length === 0;
-
-  const handleDeleteSubCategory = (subCategory: string) => {
-    dispatch(clearSubCategory(subCategory));
-  };
 
   return (
     <Paper
@@ -71,65 +67,11 @@ export function CartSummary() {
       ) : (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 3 }}>
           {cartItems.map((item) => (
-            <Paper
+            <CartItem
               key={item.subCategory}
-              variant="outlined"
-              sx={{
-                p: 2,
-                borderRadius: 2,
-                bgcolor: "grey.50",
-              }}
-            >
-              {/* Sub-category başlığı + Sil butonu */}
-              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1.5 }}>
-                <Typography variant="subtitle2" fontWeight={700}>
-                  {item.subCategory}
-                </Typography>
-                <IconButton
-                  size="small"
-                  onClick={() => handleDeleteSubCategory(item.subCategory)}
-                  sx={{ color: "text.secondary" }}
-                >
-                  <DeleteOutlineIcon fontSize="small" />
-                </IconButton>
-              </Box>
-
-              {/* Ürün listesi */}
-              {item.products.map((cartProduct) => {
-                const product = products.find((p) => p.id === cartProduct.productId);
-                if (!product) return null;
-
-                const pricePerUnit =
-                  item.purchaseType === "subscription"
-                    ? product.subscriptionPrice
-                    : product.oneTimePrice;
-
-                // Kaç adet paket var (quantity / quantityStep)
-                const unitCount = cartProduct.quantity / product.quantityStep;
-                
-                // Toplam fiyat (paket sayısı × birim fiyat)
-                const totalPrice = pricePerUnit * unitCount;
-
-                return (
-                  <Box
-                    key={cartProduct.productId}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      py: 0.5,
-                    }}
-                  >
-                    <Typography variant="body2" color="text.secondary">
-                      {cartProduct.quantity} x {product.name}
-                    </Typography>
-                    <Typography variant="body2" fontWeight={600}>
-                      ₺{totalPrice.toFixed(2)}
-                    </Typography>
-                  </Box>
-                );
-              })}
-            </Paper>
+              item={item}
+              onDelete={handleClearSubCategory}
+            />
           ))}
         </Box>
       )}
