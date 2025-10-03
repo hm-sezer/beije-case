@@ -312,6 +312,41 @@ Implement maximum quantity limits for each product category to prevent users fro
 
 ---
 
+### Fix MUI Hydration Error
+
+**What I asked AI to do:**
+
+Resolve React hydration error occurring when using MUI with Next.js App Router (Server-Side Rendering issue).
+
+**Problem Identified:**
+- MUI's Emotion CSS-in-JS was causing mismatch between server-rendered HTML and client hydration
+- Error: "Hydration failed because the server rendered HTML didn't match the client"
+- Emotion styles were not properly synchronized between server and client
+
+**Solution Implemented:**
+
+1. **Install Emotion Cache:**
+   ```bash
+   npm install @emotion/cache
+   ```
+
+2. **Create Emotion Registry (`lib/registry.tsx`):**
+   - Implemented custom EmotionRegistry component using `useServerInsertedHTML`
+   - Created Emotion cache with `createCache({ key: 'css' })`
+   - Enabled compat mode for better SSR support
+   - Server-inserts styles into HTML during SSR to match client
+
+3. **Update Providers:**
+   - Wrapped entire provider tree with `<EmotionRegistry>`
+   - Ensures MUI styles are properly cached and hydrated
+   - Maintains Redux → ThemeProvider → CssBaseline hierarchy
+
+**Why:** Next.js App Router requires special handling for CSS-in-JS libraries like Emotion to prevent hydration mismatches during SSR.
+
+**Result:** Eliminated hydration error, MUI styles now render consistently on both server and client without warnings.
+
+---
+
 ### Next Steps
 - Setup NestJS backend
 - Implement email verification API
