@@ -16,21 +16,89 @@ This is a monorepo containing:
 ### Prerequisites
 
 - Node.js 18+ 
-- npm or yarn
+- npm
 - Git
+- MongoDB (local installation or MongoDB Atlas account)
+- Gmail account (for email verification feature)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/hm-sezer/beije-case.git
 cd beije-case
 
-# Install dependencies for all packages
-npm run install:all
+# Install frontend dependencies
+cd frontend
+npm install
 
-# Start development servers
+# Install backend dependencies
+cd ../backend
+npm install
+```
+
+### Environment Setup
+
+#### Backend Configuration
+
+Create a `.env` file in the `backend/` folder with the following variables:
+
+```env
+# Database Configuration
+MONGODB_URI=mongodb://localhost:27017/beije-case
+
+# Email Service Configuration (Gmail SMTP)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-gmail-app-password
+
+# Application Configuration
+PORT=3001
+NODE_ENV=development
+
+# Frontend URL
+FRONTEND_URL=http://localhost:3000
+```
+
+**Gmail App Password Setup:**
+1. Go to [Google Account Settings](https://myaccount.google.com/)
+2. Navigate to Security → 2-Step Verification (enable if not already enabled)
+3. Navigate to Security → App passwords
+4. Generate a new app password for "Mail"
+5. Copy the 16-character password and paste it as `SMTP_PASS`
+
+**MongoDB Setup Options:**
+
+**Option 1: Local MongoDB**
+```bash
+# Install MongoDB locally (macOS with Homebrew)
+brew install mongodb-community
+brew services start mongodb-community
+
+# Use default connection string
+MONGODB_URI=mongodb://localhost:27017/beije-case
+```
+
+**Option 2: MongoDB Atlas (Cloud)**
+1. Create a free account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. Create a new cluster (free tier available)
+3. Get your connection string from "Connect" → "Connect your application"
+4. Replace `MONGODB_URI` with your Atlas connection string
+
+### Running the Application
+
+```bash
+# Terminal 1: Start backend server
+cd backend
+npm run start:dev
+# Backend will run on http://localhost:3001
+
+# Terminal 2: Start frontend server
+cd frontend
 npm run dev
+# Frontend will run on http://localhost:3000
 ```
 
 ## 📋 Features
@@ -47,29 +115,188 @@ npm run dev
 - ✅ Database integration
 - ✅ Email sending functionality
 
+## 🏛️ Backend Architecture
+
+### Module Structure
+
+#### **User Module** (`backend/src/user/`)
+Handles user registration and email verification.
+
+**Components:**
+- **`user.controller.ts`** - REST API endpoints (POST /register, GET /verify-email, GET /check-verification)
+- **`user.service.ts`** - Business logic for user operations
+  - Generate random verification tokens using Node.js crypto
+  - Create users with `isVerified=false` by default
+  - Verify tokens and update user status
+  - Check verification status
+- **`user.schema.ts`** - MongoDB schema definition
+  - Fields: username, email, verificationToken, isVerified
+  - Unique constraints on username and email
+- **`register-user.dto.ts`** - Request validation
+  - Validates email format and required fields
+
+#### **Mail Module** (`backend/src/mail/`)
+Handles email sending via Gmail SMTP.
+
+**Components:**
+- **`mail.service.ts`** - Nodemailer integration
+  - Configures Gmail SMTP transport
+  - Sends HTML verification emails with token links
+  - Email template includes verification button and plain link
+
+#### **App Module** (`backend/src/app.module.ts`)
+Root module that connects everything.
+
+**Configuration:**
+- MongoDB connection via Mongoose
+- Environment variables via ConfigModule
+- CORS enabled for frontend API calls
+- Global validation pipe for DTO validation
+
+### Data Flow
+
+```
+1. POST /user/register
+   ↓
+2. UserService.register()
+   ↓
+3. Generate verificationToken (crypto.randomBytes)
+   ↓
+4. Save to MongoDB (isVerified=false)
+   ↓
+5. MailService.sendVerificationEmail()
+   ↓
+6. Return user data (201 Created)
+
+---
+
+7. User clicks email link
+   ↓
+8. GET /user/verify-email/:username/:token
+   ↓
+9. UserService.verifyEmail()
+   ↓
+10. Find user by username
+   ↓
+11. Compare tokens
+   ↓
+12. Set isVerified=true
+   ↓
+13. Return success message (200 OK)
+```
+
 ## 🛠️ Development
 
 ### Available Scripts
 
+**Frontend:**
 ```bash
-npm run dev          # Start both frontend and backend
-npm run build        # Build all projects
-npm run test         # Run all tests
-npm run lint         # Lint all code
+cd frontend
+npm run dev          # Start Next.js dev server (port 3000)
+npm run build        # Build for production
+npm run lint         # Run ESLint
+```
+
+**Backend:**
+```bash
+cd backend
+npm run start:dev    # Start NestJS dev server with hot reload (port 3001)
+npm run build        # Build for production
+npm run test         # Run unit tests
+npm run test:e2e     # Run E2E tests
+npm run lint         # Run ESLint
 ```
 
 ## 📚 API Documentation
+
+### Base URL
+```
+http://localhost:3001
+```
 
 ### Endpoints
 
 #### POST /user/register
 Register a new user and send verification email.
 
-#### GET /user/verify-email/:username/:token
-Verify user email address.
+**Request Body:**
+```json
+{
+  "username": "johndoe",
+  "email": "john@example.com"
+}
+```
+
+**Success Response (201 Created):**
+```json
+{
+  "_id": "507f1f77bcf86cd799439011",
+  "username": "johndoe",
+  "email": "john@example.com",
+  "verificationToken": "a1b2c3d4e5f6...",
+  "isVerified": false,
+  "createdAt": "2025-10-03T10:00:00.000Z",
+  "updatedAt": "2025-10-03T10:00:00.000Z"
+}
+```
+
+**Error Responses:**
+- `409 Conflict` - Username or email already exists
+- `400 Bad Request` - Invalid email format or missing fields
+
+---
+
+#### GET /user/verify-email/:username/:verificationToken
+Verify user's email with the token sent via email.
+
+**URL Parameters:**
+- `username` - User's username
+- `verificationToken` - Token from verification email
+
+**Example:**
+```
+GET /user/verify-email/johndoe/a1b2c3d4e5f6...
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "message": "Email verified successfully"
+}
+```
+
+**Error Responses:**
+- `404 Not Found` - User not found
+- `400 Bad Request` - Invalid verification token
+
+---
 
 #### GET /user/check-verification/:username
-Check if user is verified.
+Check if a user's email is verified.
+
+**URL Parameters:**
+- `username` - User's username
+
+**Example:**
+```
+GET /user/check-verification/johndoe
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "message": "user is verified"
+}
+```
+or
+```json
+{
+  "message": "user is not verified"
+}
+```
+
+**Error Responses:**
+- `404 Not Found` - User not found
 
 ## 🧪 Testing
 
@@ -80,20 +307,30 @@ This project includes comprehensive testing:
 
 ## 🤖 AI Assistance
 
-This project was developed with assistance from:
-- ChatGPT, Gemini 2.5 Pro for architecture decisions and code generation
-- Cursor for code completion and suggestions (Claude 4.5 Sonnet)
+This project was developed with AI assistance to demonstrate modern development workflows:
 
-Detailed logs of AI assistance can be found in [docs/ai-usage-log.md](docs/ai-usage-log.md).
+**AI Tools Used:**
+- **Cursor AI (Claude 4.5 Sonnet)** - Primary development assistant
+  - Code architecture and structure design
+  - Implementation of frontend and backend modules
+  - Code review and refactoring suggestions
+  - Documentation generation
 
-## 🚀 Deployment
+**AI Usage Logs:**
+Detailed logs documenting every AI interaction and decision-making process:
+- **Frontend:** [docs/ai-usage-log-frontend.md](docs/ai-usage-log-frontend.md)
+  - Next.js setup and configuration
+  - Redux state management implementation
+  - MUI component development
+  - Code refactoring and optimization
+- **Backend:** [docs/ai-usage-log-backend.md](docs/ai-usage-log-backend.md)
+  - NestJS project initialization
+  - Email verification API implementation
+  - Module architecture decisions
+  - Database schema design
 
-Instructions for deploying to production environments.
-
-## 🤝 Contributing
-
-Guidelines for contributing to this project.
-
-## 📄 License
-
-This project is licensed under the MIT License.
+**Why AI-Assisted Development:**
+- Demonstrates ability to leverage modern development tools effectively
+- Shows clear communication and requirement specification skills
+- Maintains code quality while accelerating development
+- Documents decision-making process transparently
